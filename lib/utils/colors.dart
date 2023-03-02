@@ -17,3 +17,6 @@ const Color kSuccessColor = Color(0xFF2FAC7D);
 const Color kErrorColor = Color(0xFFEB2A48);
 const Color kWarningColor = Color(0xFFF1E43A);
 const Color kInformationColor = Color(0xFF00BAFB);
+
+const Color kPurpleColor = Color(0xFF6563dd);
+const Color kPurpleColorLight = Color(0xFFe8e2f1);

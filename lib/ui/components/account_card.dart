@@ -3,7 +3,6 @@ import 'package:i_budget_app/helpers/custom_functions.dart';
 import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
-import 'package:intl/intl.dart';
 
 class AccountCard extends StatelessWidget {
   const AccountCard({super.key, required this.account});

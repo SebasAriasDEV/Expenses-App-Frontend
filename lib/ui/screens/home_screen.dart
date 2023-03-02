@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:i_budget_app/models/account_model.dart';
+import 'package:i_budget_app/models/category_model.dart';
+import 'package:i_budget_app/ui/components/category_card.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
 
@@ -12,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dummyAccounts = Account.dummyAccounts;
+    final dummyCategories = TCategory.dummyCategories;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -30,10 +35,14 @@ class HomeScreen extends StatelessWidget {
               ListAccountCards(dummyAccounts: dummyAccounts),
               const SizedBox(height: 20),
               const HomeSummaryCard(),
+              const SizedBox(height: 20),
               Expanded(
                 flex: 3,
-                child: Container(
-                  color: Colors.red,
+                child: ListView.separated(
+                  itemBuilder: (_, index) =>
+                      CategoryCard(category: dummyCategories[index]),
+                  separatorBuilder: (_, index) => const SizedBox(height: 10),
+                  itemCount: dummyCategories.length,
                 ),
               )
             ],
