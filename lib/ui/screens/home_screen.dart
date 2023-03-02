@@ -18,34 +18,40 @@ class HomeScreen extends StatelessWidget {
     final dummyAccounts = Account.dummyAccounts;
     final dummyCategories = TCategory.dummyCategories;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Tus Finanzas',
+          style: headline2,
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: CustomThemes.horizontalPadding),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              AppBar(
-                title: const Text(
-                  'Tus Finanzas',
-                  style: headline1,
-                ),
-              ),
-              const SizedBox(height: 20),
-              ListAccountCards(dummyAccounts: dummyAccounts),
-              const SizedBox(height: 20),
-              const HomeSummaryCard(),
-              const SizedBox(height: 20),
-              Expanded(
-                flex: 3,
-                child: ListView.separated(
-                  itemBuilder: (_, index) =>
-                      CategoryCard(category: dummyCategories[index]),
-                  separatorBuilder: (_, index) => const SizedBox(height: 10),
-                  itemCount: dummyCategories.length,
-                ),
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                ListAccountCards(dummyAccounts: dummyAccounts),
+                const SizedBox(height: 20),
+                const HomeSummaryCard(),
+                const SizedBox(height: 20),
+                ...dummyCategories
+                    .map((c) => CategoryCard(category: c))
+                    .toList(),
+
+                // Expanded(
+                //   flex: 3,
+                //   child: ListView.separated(
+                //     itemBuilder: (_, index) =>
+                //         CategoryCard(category: dummyCategories[index]),
+                //     separatorBuilder: (_, index) => const SizedBox(height: 10),
+                //     itemCount: dummyCategories.length,
+                //   ),
+                // )
+              ],
+            ),
           ),
         ),
       ),
