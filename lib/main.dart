@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_budget_app/ui/screens/bottom_navigation.dart';
 import 'package:i_budget_app/ui/screens/home_screen.dart';
 import 'package:i_budget_app/ui/screens/transactions_category_screen.dart';
 import 'package:i_budget_app/utils/themes.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'iBudget App',
       debugShowCheckedModeBanner: false,
       theme: CustomThemes.mainTheme,
-      home: const HomeScreen(),
+      home: const BottomNavigation(),
     );
   }
 }
