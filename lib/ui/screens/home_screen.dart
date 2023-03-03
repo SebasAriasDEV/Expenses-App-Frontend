@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:i_budget_app/models/account_model.dart';
@@ -25,6 +24,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
+        bottom: false,
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: CustomThemes.horizontalPadding),
@@ -40,16 +40,7 @@ class HomeScreen extends StatelessWidget {
                 ...dummyCategories
                     .map((c) => CategoryCard(category: c))
                     .toList(),
-
-                // Expanded(
-                //   flex: 3,
-                //   child: ListView.separated(
-                //     itemBuilder: (_, index) =>
-                //         CategoryCard(category: dummyCategories[index]),
-                //     separatorBuilder: (_, index) => const SizedBox(height: 10),
-                //     itemCount: dummyCategories.length,
-                //   ),
-                // )
+                const SizedBox(height: 20),
               ],
             ),
           ),

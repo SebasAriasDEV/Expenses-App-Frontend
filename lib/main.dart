@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/ui/screens/home_screen.dart';
+import 'package:i_budget_app/ui/screens/transactions_category_screen.dart';
 import 'package:i_budget_app/utils/themes.dart';
 
 void main() {

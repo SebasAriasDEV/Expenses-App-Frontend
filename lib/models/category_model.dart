@@ -1,6 +1,6 @@
 class TCategory {
   String name;
-  int monthlyBudget;
+  double monthlyBudget;
   String uid;
 
   static List<TCategory> dummyCategories = [
