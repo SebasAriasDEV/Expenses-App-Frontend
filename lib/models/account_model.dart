@@ -42,7 +42,7 @@ class Account {
         type: json['type'],
         currency: json['currency'],
         uid: json['uid'],
-        balance: json['balance'],
+        balance: json['balance'].toDouble(),
       );
 
   Map<String, dynamic> toJson() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/ui/screens/bottom_navigation.dart';
-import 'package:i_budget_app/ui/screens/home_screen.dart';
-import 'package:i_budget_app/ui/screens/transactions_category_screen.dart';
 import 'package:i_budget_app/utils/themes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'iBudget App',
-      debugShowCheckedModeBanner: false,
-      theme: CustomThemes.mainTheme,
-      home: const BottomNavigation(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AccountsProvider(), lazy: true),
+      ],
+      child: MaterialApp(
+        title: 'iBudget App',
+        debugShowCheckedModeBanner: false,
+        theme: CustomThemes.mainTheme,
+        home: const BottomNavigation(),
+      ),
     );
   }
 }
