@@ -46,16 +46,19 @@ class CardContent extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 account.type,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(color: kWhiteColor),
               ),
-              Text(
-                account.name,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: kWhiteColor),
+              Expanded(
+                child: Text(
+                  account.name,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(color: kWhiteColor),
+                ),
               ),
             ],
           ),
