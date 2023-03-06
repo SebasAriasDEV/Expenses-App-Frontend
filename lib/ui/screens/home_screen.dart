@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
+import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/ui/components/category_card.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
@@ -21,22 +21,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late AccountsProvider _accountsProvider;
+  late CategoriesProvider _categoriesProvider;
+  late int todayMonth;
+
   @override
   void initState() {
     super.initState();
 
-    final AccountsProvider _accountsProvider =
-        Provider.of<AccountsProvider>(context, listen: false);
+    // Get initial load of accounts
+    _accountsProvider = Provider.of<AccountsProvider>(context, listen: false);
     _accountsProvider.getAccounts();
+
+    //Get ininital load of categories
+    _categoriesProvider =
+        Provider.of<CategoriesProvider>(context, listen: false);
+    _categoriesProvider.getCategories();
+
+    //Get current month
+    todayMonth = DateTime.now().month;
   }
 
   @override
   Widget build(BuildContext context) {
-    final dummyCategories = TCategory.dummyCategories;
+    // final dummyCategories = TCategory.dummyCategories;
+    print(todayMonth);
 
     /***** Providers */
     final AccountsProvider _accountsProvider =
         Provider.of<AccountsProvider>(context);
+    final CategoriesProvider _categoriesProvider =
+        Provider.of<CategoriesProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
                 const HomeSummaryCard(),
                 const SizedBox(height: 20),
-                ...dummyCategories
+                ..._categoriesProvider.categories
                     .map((c) => CategoryCard(category: c))
                     .toList(),
                 const SizedBox(height: 20),

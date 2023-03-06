@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +20,7 @@ class AccountsProvider extends ChangeNotifier {
   Future<void> getAccounts() async {
     //Http request to backend
     final url = Uri.parse('http://localhost:8000/api/accounts');
-
+    //TODO: Cuando el server esta caido, deberia mostrar error
     var response = await http.get(url, headers: {
       'x-token':
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0',
