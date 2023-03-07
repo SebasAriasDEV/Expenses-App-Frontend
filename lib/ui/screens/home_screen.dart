@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../components/account_cards_list.dart';
 import '../components/home_summary_card.dart';
+import '../components/month_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _categoriesProvider =
         Provider.of<CategoriesProvider>(context, listen: false);
     _categoriesProvider.getCategories(
-        year: _overallProvider.currentMonth,
+        year: _overallProvider.currentYear,
         month: _overallProvider.currentMonth);
   }
 
@@ -85,9 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const SizedBox(height: 20),
                 ListAccountCards(dummyAccounts: _accountsProvider.accounts),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const MonthIndicator(),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const HomeSummaryCard(),
                 const SizedBox(height: 20),
                 ..._categoriesProvider.categories
@@ -99,24 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class MonthIndicator extends StatelessWidget {
-  const MonthIndicator({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const FaIcon(FontAwesomeIcons.chevronLeft, color: kGreyColorShade1),
-        Text('Marzo', style: headline6.copyWith(color: kPrimaryColorDark)),
-        const FaIcon(FontAwesomeIcons.chevronRight, color: kGreyColorShade1),
-      ],
     );
   }
 }

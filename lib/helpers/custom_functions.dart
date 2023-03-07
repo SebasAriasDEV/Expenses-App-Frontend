@@ -8,8 +8,15 @@ class CustomFunctions {
   }
 
   //Converts date to month format
-  static String formatMonthName(DateTime date) {
+  static String formatMonthNameFromDate(DateTime date) {
     var formatter = DateFormat('MMMM');
     return formatter.format(date);
+  }
+
+  //Converts date to month format
+  static String formatMonthNameFromNum(int monthNumber) {
+    final formatter = DateFormat('MMMM');
+    final newDate = DateTime(2023, monthNumber);
+    return formatter.format(newDate);
   }
 }
