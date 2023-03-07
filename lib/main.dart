@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
+import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/screens/bottom_navigation.dart';
 import 'package:i_budget_app/utils/themes.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoriesProvider(), lazy: true),
         ChangeNotifierProvider(
             create: (_) => TransactionsProvider(), lazy: true),
+        ChangeNotifierProvider(create: (_) => OverallProvider(), lazy: true),
       ],
       child: MaterialApp(
         title: 'iBudget App',
