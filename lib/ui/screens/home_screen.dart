@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
+import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/category_card.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
@@ -23,7 +24,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late AccountsProvider _accountsProvider;
   late CategoriesProvider _categoriesProvider;
+  late TransactionsProvider _transactionsProvider;
   late int todayMonth;
+  late int todayYear;
 
   @override
   void initState() {
@@ -33,13 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
     _accountsProvider = Provider.of<AccountsProvider>(context, listen: false);
     _accountsProvider.getAccounts();
 
+    //Get current month
+    todayMonth = DateTime.now().month;
+    todayYear = DateTime.now().year;
+
+    //Get initial load of transactions
+    _transactionsProvider =
+        Provider.of<TransactionsProvider>(context, listen: false);
+    _transactionsProvider.getTransactions(month: todayMonth, year: todayYear);
+
     //Get ininital load of categories
     _categoriesProvider =
         Provider.of<CategoriesProvider>(context, listen: false);
-    _categoriesProvider.getCategories();
-
-    //Get current month
-    todayMonth = DateTime.now().month;
+    _categoriesProvider.getCategories(year: todayYear, month: todayMonth);
   }
 
   @override

@@ -41,7 +41,7 @@ class Account {
         name: json['name'],
         type: json['type'],
         currency: json['currency'],
-        uid: json['uid'],
+        uid: json['uid'] ?? json['_id'],
         balance: json['balance'].toDouble(),
       );
 

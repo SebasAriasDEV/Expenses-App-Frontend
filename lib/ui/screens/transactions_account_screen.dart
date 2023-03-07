@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
+import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
+import 'package:provider/provider.dart';
 
 import '../components/transactions/flexible_app_bar_content.dart';
 import '../components/transactions/transaction_card.dart';
@@ -18,7 +20,8 @@ class TransactionsAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dummyTransactions = Transaction.dummyTransactions;
+    // final dummyTransactions = Transaction.dummyTransactions;
+    final _transactiosProvider = Provider.of<TransactionsProvider>(context);
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,7 +47,7 @@ class TransactionsAccountScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ...dummyTransactions
+                      ..._transactiosProvider.transactionsList
                           .map((t) => TransactionCard(
                                 transaction: t,
                               ))

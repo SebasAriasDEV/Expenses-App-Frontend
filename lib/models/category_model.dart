@@ -18,9 +18,10 @@ class TCategory {
   });
 
   factory TCategory.fromJson(Map<String, dynamic> json) => TCategory(
-      name: json['name'],
-      monthlyBudget: json['monthlyBudget'].toDouble(),
-      uid: json['uid']);
+        name: json['name'],
+        monthlyBudget: json['monthlyBudget'].toDouble(),
+        uid: json['uid'] ?? json['_id'],
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

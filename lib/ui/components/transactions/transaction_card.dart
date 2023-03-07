@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../helpers/custom_functions.dart';
 import '../../../models/transaction_model.dart';
@@ -27,15 +28,17 @@ class TransactionCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                transaction.transactionType == 'INCOME'
-                    ? const Icon(Icons.arrow_downward, color: kSuccessColor)
-                    : const Icon(Icons.arrow_upward, color: kErrorColor),
-                const SizedBox(width: 10),
+                transaction.transactionType == 'Income'
+                    ? const FaIcon(FontAwesomeIcons.arrowDown,
+                        color: kSuccessColor)
+                    : const FaIcon(FontAwesomeIcons.arrowUpFromBracket,
+                        color: kErrorColor),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(transaction.description, style: paragraph2),
-                    Text(transaction.account, style: paragraph7),
+                    Text(transaction.account.name, style: paragraph7),
                   ],
                 ),
               ],
@@ -43,7 +46,7 @@ class TransactionCard extends StatelessWidget {
             Text(
               CustomFunctions.formatNumber(transaction.amount),
               style: headline7.copyWith(
-                  color: transaction.transactionType == 'INCOME'
+                  color: transaction.transactionType == 'Income'
                       ? kSuccessColor
                       : kErrorColor),
             )

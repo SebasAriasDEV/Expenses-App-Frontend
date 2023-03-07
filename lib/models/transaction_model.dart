@@ -1,246 +1,56 @@
+import 'package:i_budget_app/models/account_model.dart';
+import 'package:i_budget_app/models/category_model.dart';
+import 'package:i_budget_app/models/user_model.dart';
+
 class Transaction {
-  static List<Transaction> get dummyTransactions => [
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'EXPENSE',
-          amount: 1000,
-          date: DateTime.now(),
-          description: 'Arriendo cuota Marzo',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-        Transaction(
-          transactionType: 'INCOME',
-          amount: 500000,
-          date: DateTime.now(),
-          description: 'Sueldo TUL',
-          user: 'Sebas',
-          account: 'Scotiabank',
-          category: 'Sueldo',
-          uid: 'GGGGG',
-        ),
-      ];
+  late String transactionType;
+  late double amount;
+  late DateTime date;
+  late String description;
+  late int month;
+  late int year;
+  late User user;
+  late Account account;
+  late TCategory category;
+  late String uid;
 
   Transaction({
     required this.transactionType,
     required this.amount,
     required this.date,
     required this.description,
+    required this.month,
+    required this.year,
     required this.user,
     required this.account,
     required this.category,
     required this.uid,
   });
-  final String transactionType;
-  final double amount;
-  final DateTime date;
-  final String description;
-  final String user;
-  final String account;
-  final String category;
-  final String uid;
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-        transactionType: json['transactionType'],
-        amount: json['amount'],
-        date: json['date'],
-        description: json['description'],
-        user: json['user'],
-        account: json['account'],
-        category: json['category'],
-        uid: json['uid'],
-      );
+  Transaction.fromJson(Map<String, dynamic> json) {
+    transactionType = json['transactionType'];
+    amount = json['amount'].toDouble();
+    date = DateTime.parse(json['date']);
+    description = json['description'];
+    month = json['month'];
+    year = json['year'];
+    user = User.fromJson(json['user']);
+    account = Account.fromJson(json['account']);
+    category = TCategory.fromJson(json['category']);
+    uid = json['uid'];
+  }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['transactionType'] = transactionType;
     data['amount'] = amount;
     data['date'] = date;
     data['description'] = description;
-    data['user'] = user;
-    data['account'] = account;
-    data['category'] = category;
+    data['month'] = month;
+    data['year'] = year;
+    data['user'] = user.toJson();
+    data['account'] = account.toJson();
+    data['category'] = category.toJson();
     data['uid'] = uid;
     return data;
   }
