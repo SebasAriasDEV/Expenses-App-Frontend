@@ -1,33 +1,38 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:i_budget_app/helpers/custom_functions.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
+import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
+import 'package:provider/provider.dart';
 import '../screens/transactions_category_screen.dart';
 
 import '../../models/category_model.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard(
-      {super.key,
-      required this.category,
-      required this.currentExpense,
-      required this.categoryTransactions});
+  const CategoryCard({super.key, required this.category});
 
   final TCategory category;
-  final double currentExpense;
-  final List<Transaction> categoryTransactions;
 
   @override
   Widget build(BuildContext context) {
+    final _monthTransactions =
+        Provider.of<TransactionsProvider>(context).transactionsList;
+
+    final _categoryTransactions =
+        category.getTransactionsForCategory(_monthTransactions);
+    final _categoryExpense = category.getExpenseForCategory(_monthTransactions);
+
     return GestureDetector(
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => TransactionsCategoryScreen(
                     category: category,
-                    categoryTransactions: categoryTransactions,
+                    categoryTransactions: _categoryTransactions,
                   ))),
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
@@ -37,8 +42,8 @@ class CategoryCard extends StatelessWidget {
         ),
         child: CategoryCardContent(
           category: category,
-          currentExpense: currentExpense,
-          categoryTransactions: categoryTransactions,
+          categoryExpense: _categoryExpense,
+          categoryTransactions: _categoryTransactions,
         ),
       ),
     );
@@ -46,14 +51,15 @@ class CategoryCard extends StatelessWidget {
 }
 
 class CategoryCardContent extends StatelessWidget {
-  const CategoryCardContent(
-      {super.key,
-      required this.category,
-      required this.currentExpense,
-      required this.categoryTransactions});
+  const CategoryCardContent({
+    super.key,
+    required this.category,
+    required this.categoryExpense,
+    required this.categoryTransactions,
+  });
 
   final TCategory category;
-  final double currentExpense;
+  final double categoryExpense;
   final List<Transaction> categoryTransactions;
 
   @override
@@ -71,7 +77,7 @@ class CategoryCardContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(category.name, style: headline6),
-                    Text(CustomFunctions.formatNumber(currentExpense),
+                    Text(CustomFunctions.formatNumber(categoryExpense),
                         style: headline6),
                   ],
                 ),
@@ -87,7 +93,7 @@ class CategoryCardContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
-                  value: currentExpense / category.monthlyBudget,
+                  value: categoryExpense / category.monthlyBudget,
                   backgroundColor: kPurpleColorLight,
                   color: kPurpleColor,
                   minHeight: 10,

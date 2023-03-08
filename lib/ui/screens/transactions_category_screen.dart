@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
-import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
-import 'package:provider/provider.dart';
 
 import '../components/transactions/flexible_app_bar_content.dart';
 import '../components/transactions/transaction_card.dart';
@@ -21,8 +19,9 @@ class TransactionsCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final dummyTransactions = Transaction.dummyTransactions;
-    final _transactionsProvider = Provider.of<TransactionsProvider>(context);
+    final _balance = category.getExpenseForCategory(categoryTransactions);
+    final _income = category.getTotalIncome(categoryTransactions);
+    final _outcome = category.getTotalOutcome(categoryTransactions);
 
     return Scaffold(
       body: CustomScrollView(
@@ -33,12 +32,12 @@ class TransactionsCategoryScreen extends StatelessWidget {
                 style: headline2.copyWith(color: kWhiteColor)),
             leading: const BackButton(color: kWhiteColor),
             expandedHeight: 250,
-            flexibleSpace: const FlexibleSpaceBar(
+            flexibleSpace: FlexibleSpaceBar(
               // title: Text('Movimientos!!', selectionColor: Colors.red),
               background: FlexibleSpaceContent(
-                balance: 50000,
-                income: 3000,
-                outcome: 2500,
+                balance: _balance,
+                income: _income,
+                outcome: _outcome,
               ),
             ),
           ),

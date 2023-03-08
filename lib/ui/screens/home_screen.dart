@@ -1,8 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:i_budget_app/helpers/category_helpers.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
 
 import 'package:i_budget_app/providers/accounts_providers.dart';
@@ -10,7 +8,6 @@ import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/category_card.dart';
-import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
 import 'package:provider/provider.dart';
@@ -97,15 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const HomeSummaryCard(),
                 const SizedBox(height: 20),
                 ..._categoriesProvider.categories
-                    .map((c) => CategoryCard(
-                          category: c,
-                          currentExpense:
-                              c.getExpenseForCategory(_monthTransactions),
-                          categoryTransactions:
-                              CategoryHelpers.getTransactionsForCategory(
-                                  category: c,
-                                  monthTransactions: _monthTransactions),
-                        ))
+                    .map((c) => CategoryCard(category: c))
                     .toList(),
                 const SizedBox(height: 20),
               ],

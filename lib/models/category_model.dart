@@ -33,11 +33,10 @@ class TCategory {
         total = total + transaction.amount;
       }
     }
-
     return total;
   }
 
-//Loop through all the month transactions and filter this category's transactions
+  //Loop through all the month transactions and filter this category's transactions
   List<Transaction> getTransactionsForCategory(
       List<Transaction> monthTransactions) {
     List<Transaction> categoryTransactions = [];
@@ -46,7 +45,28 @@ class TCategory {
         categoryTransactions.add(transaction);
       }
     }
-
     return categoryTransactions;
+  }
+
+  //Loop through all the month transactions and get total income
+  double getTotalIncome(List<Transaction> categoryTransactions) {
+    double result = 0;
+    for (var transaction in categoryTransactions) {
+      if (transaction.transactionType == 'Income') {
+        result += transaction.amount;
+      }
+    }
+    return result;
+  }
+
+  //Loop through all the month transactions and get total income
+  double getTotalOutcome(List<Transaction> categoryTransactions) {
+    double result = 0;
+    for (var transaction in categoryTransactions) {
+      if (transaction.transactionType == 'Expense') {
+        result += transaction.amount;
+      }
+    }
+    return result;
   }
 }
