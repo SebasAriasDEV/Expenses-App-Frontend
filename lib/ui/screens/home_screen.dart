@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i_budget_app/helpers/category_helpers.dart';
+import 'package:i_budget_app/models/transaction_model.dart';
 
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
@@ -61,12 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final _overallProvider = Provider.of<OverallProvider>(context);
     print(_overallProvider.currentMonth);
     print(_overallProvider.currentYear);
+    print('Rebuilt!');
 
     /***** Providers */
     final AccountsProvider _accountsProvider =
         Provider.of<AccountsProvider>(context);
     final CategoriesProvider _categoriesProvider =
         Provider.of<CategoriesProvider>(context);
+    final List<Transaction> _monthTransactions =
+        Provider.of<TransactionsProvider>(context).transactionsList;
 
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 const HomeSummaryCard(),
                 const SizedBox(height: 20),
                 ..._categoriesProvider.categories
-                    .map((c) => CategoryCard(category: c))
+                    .map((c) => CategoryCard(
+                          category: c,
+                          currentExpense:
+                              CategoryHelpers.getCurrentExpenseForCategory(
+                            category: c,
+                            transactions: _monthTransactions,
+                          ),
+                        ))
                     .toList(),
                 const SizedBox(height: 20),
               ],
