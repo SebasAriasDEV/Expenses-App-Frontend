@@ -3,15 +3,16 @@ import 'package:i_budget_app/models/transaction_model.dart';
 
 //Loop through all the month transactions and find the total expense for the category provided
 class CategoryHelpers {
-  static double getCurrentExpenseForCategory(
-      {required TCategory category, required List<Transaction> transactions}) {
-    double total = 0;
-    for (var transaction in transactions) {
+  static List<Transaction> getTransactionsForCategory(
+      {required TCategory category,
+      required List<Transaction> monthTransactions}) {
+    List<Transaction> categoryTransactions = [];
+    for (var transaction in monthTransactions) {
       if (transaction.category.uid == category.uid) {
-        total = total + transaction.amount;
+        categoryTransactions.add(transaction);
       }
     }
 
-    return total;
+    return categoryTransactions;
   }
 }

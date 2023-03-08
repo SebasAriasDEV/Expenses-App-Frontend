@@ -1,15 +1,9 @@
+import 'package:i_budget_app/models/transaction_model.dart';
+
 class TCategory {
   String name;
   double monthlyBudget;
   String uid;
-
-  static List<TCategory> dummyCategories = [
-    TCategory(name: 'Arriendo', monthlyBudget: 650, uid: 'AAAA'),
-    TCategory(name: 'Mercado', monthlyBudget: 120, uid: 'BBBB'),
-    TCategory(name: 'Ahorro Familia', monthlyBudget: 120, uid: 'BBBB'),
-    TCategory(name: 'Deporte', monthlyBudget: 120, uid: 'BBBB'),
-    TCategory(name: 'Celular', monthlyBudget: 120, uid: 'BBBB'),
-  ];
 
   TCategory({
     required this.name,
@@ -29,5 +23,30 @@ class TCategory {
     data['monthlyBudget'] = monthlyBudget;
     data['uid'] = uid;
     return data;
+  }
+
+  //Loop through all the month transactions and find the total expense for the category provided
+  double getExpenseForCategory(List<Transaction> monthTransactions) {
+    double total = 0;
+    for (var transaction in monthTransactions) {
+      if (transaction.category.uid == uid) {
+        total = total + transaction.amount;
+      }
+    }
+
+    return total;
+  }
+
+//Loop through all the month transactions and filter this category's transactions
+  List<Transaction> getTransactionsForCategory(
+      List<Transaction> monthTransactions) {
+    List<Transaction> categoryTransactions = [];
+    for (var transaction in monthTransactions) {
+      if (transaction.category.uid == uid) {
+        categoryTransactions.add(transaction);
+      }
+    }
+
+    return categoryTransactions;
   }
 }

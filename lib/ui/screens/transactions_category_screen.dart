@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
@@ -11,9 +13,11 @@ import '../components/transactions/flexible_app_bar_content.dart';
 import '../components/transactions/transaction_card.dart';
 
 class TransactionsCategoryScreen extends StatelessWidget {
-  const TransactionsCategoryScreen({super.key, required this.category});
+  const TransactionsCategoryScreen(
+      {super.key, required this.category, required this.categoryTransactions});
 
   final TCategory category;
+  final List<Transaction> categoryTransactions;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class TransactionsCategoryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ..._transactionsProvider.transactionsList
+                      ...categoryTransactions
                           .map((t) => TransactionCard(
                                 transaction: t,
                               ))

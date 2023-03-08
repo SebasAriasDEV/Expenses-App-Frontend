@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:i_budget_app/helpers/custom_functions.dart';
+import 'package:i_budget_app/models/transaction_model.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import '../screens/transactions_category_screen.dart';
@@ -9,10 +10,14 @@ import '../../models/category_model.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard(
-      {super.key, required this.category, required this.currentExpense});
+      {super.key,
+      required this.category,
+      required this.currentExpense,
+      required this.categoryTransactions});
 
   final TCategory category;
   final double currentExpense;
+  final List<Transaction> categoryTransactions;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,10 @@ class CategoryCard extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => TransactionsCategoryScreen(category: category))),
+              builder: (_) => TransactionsCategoryScreen(
+                    category: category,
+                    categoryTransactions: categoryTransactions,
+                  ))),
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
@@ -28,7 +36,10 @@ class CategoryCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: CategoryCardContent(
-            category: category, currentExpense: currentExpense),
+          category: category,
+          currentExpense: currentExpense,
+          categoryTransactions: categoryTransactions,
+        ),
       ),
     );
   }
@@ -36,10 +47,14 @@ class CategoryCard extends StatelessWidget {
 
 class CategoryCardContent extends StatelessWidget {
   const CategoryCardContent(
-      {super.key, required this.category, required this.currentExpense});
+      {super.key,
+      required this.category,
+      required this.currentExpense,
+      required this.categoryTransactions});
 
   final TCategory category;
   final double currentExpense;
+  final List<Transaction> categoryTransactions;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +78,8 @@ class CategoryCardContent extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("20 Movimientos", style: paragraph6),
+                    Text("${categoryTransactions.length} Movimientos",
+                        style: paragraph6),
                     Text(
                         "de ${CustomFunctions.formatNumber(category.monthlyBudget)}",
                         style: paragraph6),

@@ -100,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     .map((c) => CategoryCard(
                           category: c,
                           currentExpense:
-                              CategoryHelpers.getCurrentExpenseForCategory(
-                            category: c,
-                            transactions: _monthTransactions,
-                          ),
+                              c.getExpenseForCategory(_monthTransactions),
+                          categoryTransactions:
+                              CategoryHelpers.getTransactionsForCategory(
+                                  category: c,
+                                  monthTransactions: _monthTransactions),
                         ))
                     .toList(),
                 const SizedBox(height: 20),
