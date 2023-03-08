@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/helpers/custom_functions.dart';
+import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
+import 'package:provider/provider.dart';
 
 class HomeSummaryCard extends StatelessWidget {
   const HomeSummaryCard({
@@ -10,12 +12,14 @@ class HomeSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _transactionsProvider = Provider.of<TransactionsProvider>(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const SummaryItem(
+        SummaryItem(
           title: 'Ingreso',
-          amount: 11000000,
+          amount: _transactionsProvider.getOverallIncome(),
           color: kSuccessColor,
         ),
         Container(
@@ -23,9 +27,9 @@ class HomeSummaryCard extends StatelessWidget {
           height: 20,
           color: kGreyColorShade2,
         ),
-        const SummaryItem(
+        SummaryItem(
           title: 'Egreso',
-          amount: 11000000,
+          amount: _transactionsProvider.getOverallOutome(),
           color: kErrorColor,
         ),
         Container(
@@ -33,9 +37,9 @@ class HomeSummaryCard extends StatelessWidget {
           height: 20,
           color: kGreyColorShade2,
         ),
-        const SummaryItem(
+        SummaryItem(
           title: 'Neto',
-          amount: 11000000,
+          amount: _transactionsProvider.getNetTotal(),
           color: kBlackColor,
         ),
       ],

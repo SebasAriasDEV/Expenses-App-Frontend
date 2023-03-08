@@ -15,6 +15,7 @@ class TransactionsProvider extends ChangeNotifier {
   List<Transaction> get transactionsList => _transactionsList;
 
   //**** Functions */
+  //HTTP request for transactions
   Future<void> getTransactions({required int month, required int year}) async {
     final url = Uri.parse(
         'http://localhost:8000/api/transactions?month=$month&year=$year');
@@ -37,5 +38,34 @@ class TransactionsProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  //Get over income of the month
+  double getOverallIncome() {
+    double result = 0;
+
+    for (var transaction in _transactionsList) {
+      if (transaction.transactionType == 'Income') {
+        result += transaction.amount;
+      }
+    }
+    return result;
+  }
+
+  //Get over expense of the month
+  double getOverallOutome() {
+    double result = 0;
+
+    for (var transaction in _transactionsList) {
+      if (transaction.transactionType == 'Expense') {
+        result += transaction.amount;
+      }
+    }
+    return result;
+  }
+
+  //Get over expense of the month
+  double getNetTotal() {
+    return getOverallIncome() + getOverallOutome();
   }
 }
