@@ -1,9 +1,14 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/helpers/custom_functions.dart';
 import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/ui/screens/transactions_account_screen.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/transactions_provider.dart';
 
 class AccountCard extends StatelessWidget {
   const AccountCard({super.key, required this.account});
@@ -12,11 +17,17 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _monthTransactions =
+        Provider.of<TransactionsProvider>(context).transactionsList;
     return GestureDetector(
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => TransactionsAccountScreen(account: account))),
+              builder: (_) => TransactionsAccountScreen(
+                    account: account,
+                    accountTransactions:
+                        account.getTransactionsForAccount(_monthTransactions),
+                  ))),
       child: Container(
         width: 250,
         decoration: BoxDecoration(

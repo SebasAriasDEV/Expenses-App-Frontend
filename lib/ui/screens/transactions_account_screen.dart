@@ -1,11 +1,11 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/models/transaction_model.dart';
-import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
-import 'package:provider/provider.dart';
 
 import '../components/transactions/flexible_app_bar_content.dart';
 import '../components/transactions/transaction_card.dart';
@@ -14,14 +14,16 @@ class TransactionsAccountScreen extends StatelessWidget {
   const TransactionsAccountScreen({
     super.key,
     required this.account,
+    required this.accountTransactions,
   });
 
   final Account account;
+  final List<Transaction> accountTransactions;
 
   @override
   Widget build(BuildContext context) {
-    // final dummyTransactions = Transaction.dummyTransactions;
-    final _transactiosProvider = Provider.of<TransactionsProvider>(context);
+    final _income = account.getTotalIncome(accountTransactions);
+    final _outcome = account.getTotalOutcome(accountTransactions);
 
     return Scaffold(
       body: CustomScrollView(
@@ -35,7 +37,10 @@ class TransactionsAccountScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               // title: Text('Movimientos!!', selectionColor: Colors.red),
               background: FlexibleSpaceContent(
-                  balance: account.balance, income: 2500, outcome: 8000),
+                balance: account.balance,
+                income: _income,
+                outcome: _outcome,
+              ),
             ),
           ),
           SliverList(
@@ -47,7 +52,7 @@ class TransactionsAccountScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ..._transactiosProvider.transactionsList
+                      ...accountTransactions
                           .map((t) => TransactionCard(
                                 transaction: t,
                               ))

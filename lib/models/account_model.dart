@@ -1,3 +1,5 @@
+import 'package:i_budget_app/models/transaction_model.dart';
+
 class Account {
   String name;
   String type;
@@ -53,5 +55,39 @@ class Account {
     data['uid'] = uid;
     data['balance'] = balance;
     return data;
+  }
+
+  //Loop through all the month transactions and filter this account's transactions
+  List<Transaction> getTransactionsForAccount(
+      List<Transaction> monthTransactions) {
+    List<Transaction> accountTransactions = [];
+    for (var transaction in monthTransactions) {
+      if (transaction.account.uid == uid) {
+        accountTransactions.add(transaction);
+      }
+    }
+    return accountTransactions;
+  }
+
+  //Loop through all the month transactions and get total income
+  double getTotalIncome(List<Transaction> accountTransactions) {
+    double result = 0;
+    for (var transaction in accountTransactions) {
+      if (transaction.transactionType == 'Income') {
+        result += transaction.amount;
+      }
+    }
+    return result;
+  }
+
+  //Loop through all the month transactions and get total income
+  double getTotalOutcome(List<Transaction> accountTransactions) {
+    double result = 0;
+    for (var transaction in accountTransactions) {
+      if (transaction.transactionType == 'Expense') {
+        result += transaction.amount;
+      }
+    }
+    return result;
   }
 }
