@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_budget_app/ui/screens/home_screen.dart';
 import 'package:i_budget_app/utils/colors.dart';
 
+import '../components/modal_create_movement.dart';
+
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
 
@@ -19,7 +21,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => const ModalCreateMovement(),
+          );
+        },
         backgroundColor: kPrimaryColor,
         child: const FaIcon(FontAwesomeIcons.plus),
         //params

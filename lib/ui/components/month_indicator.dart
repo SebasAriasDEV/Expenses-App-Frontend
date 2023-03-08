@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_budget_app/helpers/custom_functions.dart';
+import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
