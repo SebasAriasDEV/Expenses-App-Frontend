@@ -12,7 +12,7 @@ import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
 import 'package:provider/provider.dart';
 
-import '../components/account_cards_list.dart';
+import '../components/accounts/account_cards_list.dart';
 import '../components/home_summary_card.dart';
 import '../components/month_indicator.dart';
 

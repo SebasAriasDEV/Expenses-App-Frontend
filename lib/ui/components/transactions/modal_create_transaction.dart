@@ -5,13 +5,14 @@ import 'package:i_budget_app/models/account_model.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
+import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../../utils/colors.dart';
+import '../../../utils/colors.dart';
 
 class ModalCreateTransaction extends StatefulWidget {
   const ModalCreateTransaction({
@@ -115,6 +116,9 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
 
     //Post new transaction
     Future<void> createTransaction() async {
+      final OverallProvider _overallProvider =
+          Provider.of<OverallProvider>(context, listen: false);
+
       final String response = await _transactionsProvider.createTransaction(
         _controllerCategoryUid.text,
         _controllerAccountUid.text,
@@ -125,6 +129,9 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
       );
 
       if (response == 'OK') {
+        await _transactionsProvider.getTransactions(
+            month: _overallProvider.currentMonth,
+            year: _overallProvider.currentYear);
         Navigator.pop(context);
       } else {
         print('Algo salio mal!!!');

@@ -8,7 +8,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     required this.text,
     this.isLoading = false,
-    this.isActive = false,
+    this.isActive = true,
   });
 
   final Function onTap;

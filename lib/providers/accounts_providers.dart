@@ -37,4 +37,39 @@ class AccountsProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  //POST - Create a new account
+  //Post a new transaction
+  Future<String> createAccount(
+    String name,
+    String type,
+    String currency,
+    double balance,
+  ) async {
+    final Uri url = Uri.parse('http://localhost:8000/api/accounts');
+    final body = {
+      'name': name,
+      'type': type,
+      'currency': currency,
+      'balance': balance,
+    };
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0'
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return 'OK';
+    } else {
+      print(response.statusCode);
+      print(response.body);
+      print(response.toString());
+      return 'ERROR';
+    }
+  }
 }
