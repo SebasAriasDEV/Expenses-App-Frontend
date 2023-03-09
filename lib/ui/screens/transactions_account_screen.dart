@@ -55,6 +55,7 @@ class TransactionsAccountScreen extends StatelessWidget {
                       ...accountTransactions
                           .map((t) => TransactionCard(
                                 transaction: t,
+                                inAccountDetail: true,
                               ))
                           .toList(),
                     ],

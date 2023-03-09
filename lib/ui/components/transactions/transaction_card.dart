@@ -10,9 +10,11 @@ class TransactionCard extends StatelessWidget {
   const TransactionCard({
     super.key,
     required this.transaction,
+    this.inAccountDetail = false,
   });
 
   final Transaction transaction;
+  final bool inAccountDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +40,30 @@ class TransactionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(transaction.description, style: paragraph2),
-                    Text(transaction.account.name, style: paragraph7),
+                    Text(
+                        inAccountDetail
+                            ? transaction.category.name
+                            : transaction.account.name,
+                        style: paragraph7),
                   ],
                 ),
               ],
             ),
-            Text(
-              CustomFunctions.formatNumber(transaction.amount),
-              style: headline7.copyWith(
-                  color: transaction.transactionType == 'Income'
-                      ? kSuccessColor
-                      : kErrorColor),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  CustomFunctions.formatNumber(transaction.amount),
+                  style: headline7.copyWith(
+                      color: transaction.transactionType == 'Income'
+                          ? kSuccessColor
+                          : kErrorColor),
+                ),
+                Text(
+                  CustomFunctions.formatFullDate(transaction.date.toLocal()),
+                  style: paragraph7,
+                )
+              ],
             )
           ],
         ));

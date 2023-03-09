@@ -13,6 +13,12 @@ class CustomFunctions {
     return formatter.format(date);
   }
 
+  //Converts date to readable format
+  static String formatFullDate(DateTime date) {
+    var formatter = DateFormat('dd-MMM-yy');
+    return formatter.format(date);
+  }
+
   //Converts date to month format
   static String formatMonthNameFromNum(int monthNumber) {
     final formatter = DateFormat('MMMM');
