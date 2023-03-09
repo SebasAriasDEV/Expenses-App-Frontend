@@ -68,4 +68,41 @@ class TransactionsProvider extends ChangeNotifier {
   double getNetTotal() {
     return getOverallIncome() + getOverallOutome();
   }
+
+  //Post a new transaction
+  Future<String> createTransaction(
+      String categoryUID,
+      String accountUID,
+      double amount,
+      String transactionType,
+      String description,
+      String date) async {
+    final Uri url = Uri.parse('http://localhost:8000/api/transactions');
+    final body = {
+      'transactionType': transactionType,
+      'amount': amount,
+      'description': description,
+      'date': date,
+      'account': accountUID,
+      'category': categoryUID,
+    };
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0'
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return 'OK';
+    } else {
+      print(response.statusCode);
+      print(response.body);
+      print(response.toString());
+      return 'ERROR';
+    }
+  }
 }

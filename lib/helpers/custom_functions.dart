@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class CustomFunctions {
   //Converts number to currency with thousand commas
   static String formatNumber(double number) {
-    var formatter = NumberFormat('#,###,000');
+    var formatter = NumberFormat.decimalPatternDigits(decimalDigits: 2);
     return formatter.format(number);
   }
 
