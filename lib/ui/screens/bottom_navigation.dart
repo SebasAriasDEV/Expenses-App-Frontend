@@ -1,10 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i_budget_app/ui/components/modal_create_transaction.dart';
 import 'package:i_budget_app/ui/screens/home_screen.dart';
 import 'package:i_budget_app/utils/colors.dart';
-
-import '../components/modal_create_movement.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -25,7 +24,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            builder: (context) => const ModalCreateMovement(),
+            builder: (context) => const ModalCreateTransaction(),
           );
         },
         backgroundColor: kPrimaryColor,

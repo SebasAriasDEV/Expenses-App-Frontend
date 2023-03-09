@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                ListAccountCards(dummyAccounts: _accountsProvider.accounts),
+                ListAccountCards(accounts: _accountsProvider.accounts),
                 const SizedBox(height: 20),
                 const MonthIndicator(),
                 const SizedBox(height: 20),
