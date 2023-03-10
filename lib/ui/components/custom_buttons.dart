@@ -21,14 +21,17 @@ class PrimaryButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: MaterialButton(
-        onPressed: isActive ? () => onTap() : null,
+        onPressed: isActive && !isLoading ? () => onTap() : null,
         color: kPrimaryColor,
         disabledColor: kGreyColor,
         height: 56,
         elevation: 0.0,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Text(text, style: headline6.copyWith(color: kWhiteColor)),
+        child: isLoading
+            ? Center(
+                child: const CircularProgressIndicator(color: kPrimaryColor))
+            : Text(text, style: headline6.copyWith(color: kWhiteColor)),
       ),
     );
   }

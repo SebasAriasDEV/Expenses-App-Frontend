@@ -23,6 +23,7 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
   late final AccountsProvider _accountsProvider;
 
   bool _canSubmit = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -57,6 +58,10 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
 
     //Post new transaction
     Future<void> createAccount() async {
+      //Set loading in button
+      _isLoading = true;
+      setState(() {});
+
       final String response = await _accountsProvider.createAccount(
         _controllerName.text,
         _controllerType.text,
@@ -70,6 +75,10 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
       } else {
         print('Algo salio mal!!!');
       }
+
+      //Stop loading in button
+      _isLoading = false;
+      setState(() {});
     }
 
     //** Build Widgets */
@@ -122,6 +131,7 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
                 onTap: () => createAccount(),
                 text: 'Agregar cuenta',
                 isActive: _canSubmit,
+                isLoading: _isLoading,
               ),
             ],
           ),

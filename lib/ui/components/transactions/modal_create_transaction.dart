@@ -26,8 +26,8 @@ class ModalCreateTransaction extends StatefulWidget {
 class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
   late final TransactionsProvider _transactionsProvider;
 
-  late final TCategory _selectedCategory;
-  late final Account _selectedAccount;
+  late TCategory _selectedCategory;
+  late Account _selectedAccount;
 
   late final List<TCategory> _categories;
   late final List<Account> _accounts;
@@ -41,6 +41,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
 
   List<bool> _toggleSelection = [false, false];
   bool _canSubmit = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -116,6 +117,10 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
 
     //Post new transaction
     Future<void> createTransaction() async {
+      //Set loading in button
+      _isLoading = true;
+      setState(() {});
+
       final OverallProvider _overallProvider =
           Provider.of<OverallProvider>(context, listen: false);
 
@@ -136,6 +141,10 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
       } else {
         print('Algo salio mal!!!');
       }
+
+      //Stop loading
+      _isLoading = false;
+      setState(() {});
     }
 
     /** Build widgets */
@@ -189,17 +198,20 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
                   onTap: () => pickDate(),
                 ),
                 const SizedBox(height: 15),
-                DropdownButtonFormField(
-                  value: _selectedAccount.uid,
+                DropdownButtonFormField<Account>(
+                  value: _selectedAccount,
                   dropdownColor: kWhiteColor,
                   items: [
                     ..._accounts
                         .map((c) =>
-                            DropdownMenuItem(value: c.uid, child: Text(c.name)))
+                            DropdownMenuItem(value: c, child: Text(c.name)))
                         .toList()
                   ],
-                  onChanged: (uidSelected) {
-                    _controllerAccountUid.text = uidSelected ?? '';
+                  onChanged: (selectedAccount) {
+                    _controllerAccountUid.text = selectedAccount?.uid ?? '';
+                    if (selectedAccount != null) {
+                      _selectedAccount = selectedAccount;
+                    }
                     checkCompleteness();
                   },
                 ),
@@ -245,6 +257,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
                   onTap: () => createTransaction(),
                   text: 'Agregar',
                   isActive: _canSubmit,
+                  isLoading: _isLoading,
                 ),
               ],
             ),
