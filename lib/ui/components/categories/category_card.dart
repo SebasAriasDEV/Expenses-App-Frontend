@@ -8,9 +8,9 @@ import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:provider/provider.dart';
-import '../screens/transactions_category_screen.dart';
+import '../../screens/transactions_category_screen.dart';
 
-import '../../models/category_model.dart';
+import '../../../models/category_model.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({super.key, required this.category});

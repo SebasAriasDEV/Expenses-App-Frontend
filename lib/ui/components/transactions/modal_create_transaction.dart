@@ -72,9 +72,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    //** Variables  */
-
-    /** Functions */
+    //** Functions */
     // Checks if every field is filled so it can create the transaction
     void checkCompleteness() {
       if (_controllerAccountUid.text != '' &&
@@ -216,17 +214,20 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
                   },
                 ),
                 const SizedBox(height: 15),
-                DropdownButtonFormField(
-                  value: _selectedCategory.uid,
+                DropdownButtonFormField<TCategory>(
+                  value: _selectedCategory,
                   dropdownColor: kWhiteColor,
                   items: [
                     ..._categories
                         .map((c) =>
-                            DropdownMenuItem(value: c.uid, child: Text(c.name)))
+                            DropdownMenuItem(value: c, child: Text(c.name)))
                         .toList()
                   ],
-                  onChanged: (uidSelected) {
-                    _controllerCategoryUid.text = uidSelected ?? '';
+                  onChanged: (selectedCategory) {
+                    _controllerCategoryUid.text = selectedCategory?.uid ?? '';
+                    if (selectedCategory != null) {
+                      _selectedCategory = selectedCategory;
+                    }
                     checkCompleteness();
                   },
                 ),
