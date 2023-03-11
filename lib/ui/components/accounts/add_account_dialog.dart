@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
+import 'package:i_budget_app/ui/components/custom_snackbar.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +75,14 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
       if (response == 'OK') {
         await _accountsProvider.getAccounts();
         Navigator.pop(context);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(customSnackBar(text: 'La cuenta ha sido creada!'));
       } else {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
+          text: 'Ups! Algo salió mal. La cuenta no pudo ser creada.',
+          isError: true,
+        ));
         print('Algo salio mal!!!');
       }
 

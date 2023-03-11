@@ -11,6 +11,9 @@ void main() {
   runApp(const MyApp());
 }
 
+const testingToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBjODM5NjU2YmM5MjE4MTkzNTlkYjciLCJpYXQiOjE2Nzg1NDE3MTgsImV4cCI6MTcwNDQ2MTcxOH0.0LODcCHwAnkq8yE2Ja45t4-Q8YUzzGk1wmVBAm2kQNA';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

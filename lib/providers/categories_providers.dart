@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:i_budget_app/main.dart';
 import 'package:i_budget_app/models/category_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:i_budget_app/models/server_responses/categories_list_response.dart';
@@ -25,8 +26,7 @@ class CategoriesProvider extends ChangeNotifier {
     final response = await http.get(
       url,
       headers: {
-        'x-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0',
+        'x-token': testingToken,
       },
     );
 
@@ -56,8 +56,7 @@ class CategoriesProvider extends ChangeNotifier {
       url,
       headers: {
         'Content-Type': 'application/json',
-        'x-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0'
+        'x-token': testingToken,
       },
       body: jsonEncode(body),
     );
