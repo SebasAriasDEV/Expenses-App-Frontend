@@ -101,20 +101,36 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
                 onChanged: (_) => checkCompleteness(),
               ),
               const SizedBox(height: 15),
-              TextField(
-                controller: _controllerType,
+              DropdownButtonFormField<String>(
+                dropdownColor: kWhiteColor,
                 decoration: const InputDecoration().copyWith(
                   hintText: 'Tipo de cuenta',
                 ),
-                onChanged: (_) => checkCompleteness(),
+                items: ['Debito', 'Credito']
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+                onChanged: (accountType) {
+                  if (accountType != null) {
+                    _controllerType.text = accountType;
+                  }
+                  checkCompleteness();
+                },
               ),
               const SizedBox(height: 15),
-              TextField(
-                controller: _controllerCurrency,
+              DropdownButtonFormField<String>(
+                dropdownColor: kWhiteColor,
                 decoration: const InputDecoration().copyWith(
                   hintText: 'Moneda de la cuenta',
                 ),
-                onChanged: (_) => checkCompleteness(),
+                items: ['COP', 'EUR']
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+                onChanged: (selectedCurrency) {
+                  if (selectedCurrency != null) {
+                    _controllerCurrency.text = selectedCurrency;
+                  }
+                  checkCompleteness();
+                },
               ),
               const SizedBox(height: 15),
               TextField(
