@@ -16,6 +16,7 @@ class CategoriesProvider extends ChangeNotifier {
   int get totalCategories => _totalCategories;
 
   //******** Functions */
+  //Get all categories from selected month and year
   Future<void> getCategories({required int month, required int year}) async {
     //Http request to backend
     final url = Uri.parse(
@@ -37,7 +38,35 @@ class CategoriesProvider extends ChangeNotifier {
       _totalCategories = _categoriesListReponse.total;
       _categories = _categoriesListReponse.categories;
     }
-
     notifyListeners();
+  }
+
+  // Create a new category
+  Future<String> createCategory(
+      String name, double monthlyBudget, int month, int year) async {
+    final url = Uri.parse('http://localhost:8000/api/categories');
+    final Map<String, Object> body = {
+      'name': name,
+      'monthlyBudget': monthlyBudget,
+      'month': month,
+      'year': year,
+    };
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2ZlNTg1MjUyOTA3Y2RlZjJiZDM2ZGYiLCJpYXQiOjE2Nzc2MTMxMzgsImV4cCI6MTcwMzUzMzEzOH0.LHtsDYsaUrrR6gcG98V8X3fmWD8xWW93anLOLldg0i0'
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return 'OK';
+    } else {
+      print(response.toString());
+      return 'ERROR';
+    }
   }
 }

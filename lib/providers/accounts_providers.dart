@@ -66,8 +66,6 @@ class AccountsProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       return 'OK';
     } else {
-      print(response.statusCode);
-      print(response.body);
       print(response.toString());
       return 'ERROR';
     }

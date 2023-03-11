@@ -8,11 +8,9 @@ import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/categories/category_card.dart';
-import 'package:i_budget_app/utils/colors.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:i_budget_app/utils/themes.dart';
 import 'package:provider/provider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../components/accounts/account_cards_list.dart';
 import '../components/categories/new_category_button.dart';
@@ -100,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .map((c) => CategoryCard(category: c))
                     .toList(),
                 const NewCategoryButton(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
               ],
             ),
           ),

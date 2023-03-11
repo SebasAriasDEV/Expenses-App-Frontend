@@ -72,7 +72,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    //** Functions */
+    //** Build - Functions */
     // Checks if every field is filled so it can create the transaction
     void checkCompleteness() {
       if (_controllerAccountUid.text != '' &&
@@ -145,7 +145,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
       setState(() {});
     }
 
-    /** Build widgets */
+    /** Build - Widgets */
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(

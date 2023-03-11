@@ -1,5 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
+import 'package:i_budget_app/providers/categories_providers.dart';
+import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/text_themes.dart';
@@ -15,11 +20,16 @@ class NewCategoryDialog extends StatefulWidget {
 
 class _NewCategoryDialogState extends State<NewCategoryDialog> {
   //** Providers */
+  late final OverallProvider _overallProvider;
 
   //** Variables */
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerBudget = TextEditingController();
-  final TextEditingController _controllerDatePicker = TextEditingController();
+  final TextEditingController _controllerMonth = TextEditingController();
+  final TextEditingController _controllerYear = TextEditingController();
+
+  late int _selectedMonth;
+  late int _selectedYear;
 
   bool _canSubmit = false;
   bool _isLoading = false;
@@ -28,6 +38,11 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
   @override
   void initState() {
     super.initState();
+
+    _overallProvider = Provider.of<OverallProvider>(context, listen: false);
+
+    _selectedMonth = _overallProvider.currentMonth;
+    _selectedYear = _overallProvider.currentYear;
   }
 
   @override
@@ -35,15 +50,16 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
     super.dispose();
     _controllerName.dispose();
     _controllerBudget.dispose();
-    _controllerDatePicker.dispose();
+    _controllerMonth.dispose();
+    _controllerYear.dispose();
   }
 
   //** Functions */
   void checkCompleteness() {
     if (_controllerName.text != '' &&
-        _controllerName.text != '' &&
         _controllerBudget.text != '' &&
-        _controllerDatePicker.text != '') {
+        _selectedMonth != 0 &&
+        _selectedYear != 0) {
       _canSubmit = true;
     } else {
       _canSubmit = false;
@@ -54,6 +70,42 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
   //** Build widgets */
   @override
   Widget build(BuildContext context) {
+    //** Build - Providers */
+    final CategoriesProvider _categoriesProvider =
+        Provider.of<CategoriesProvider>(context, listen: false);
+
+    //** Build -  Variables */
+    final List<int> _months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    final List<int> _years = [2023, 2024, 2025];
+
+    //** Build - Functions */
+    Future<void> createCategory() async {
+      //Set loading to true
+      _isLoading = true;
+      setState(() {});
+
+      final response = await _categoriesProvider.createCategory(
+        _controllerName.text,
+        double.parse(_controllerBudget.text),
+        _selectedMonth,
+        _selectedYear,
+      );
+
+      if (response == 'OK') {
+        await _categoriesProvider.getCategories(
+          month: _overallProvider.currentMonth,
+          year: _overallProvider.currentYear,
+        );
+        Navigator.pop(context);
+      } else {
+        print('Algo salio mal');
+      }
+
+      //Stops loading
+      _isLoading = false;
+      setState(() {});
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor: kGreyColorShade4,
@@ -75,29 +127,61 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
               const SizedBox(height: 15),
               TextField(
                 controller: _controllerBudget,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration().copyWith(
                   hintText: 'Presupuesto mensual',
+                  prefix: const Text(
+                    'COP:  ',
+                    style: paragraph7,
+                  ),
                 ),
                 onChanged: (_) => checkCompleteness(),
               ),
               const SizedBox(height: 15),
-              TextField(
-                  controller:
-                      _controllerDatePicker, //editing controller of this TextField
-                  decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.calendar_today,
-                        color: kPrimaryColor,
-                      ), //icon of text field
-                      hintText: "Fecha" //label text of field
-                      ),
-                  readOnly: true, // when true user cannot edit text
-                  onTap: () {} // => pickDate(),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      decoration: const InputDecoration(hintText: "Mes"),
+                      dropdownColor: kWhiteColor,
+                      value: _selectedMonth,
+                      items: _months
+                          .map((m) => DropdownMenuItem(
+                              value: m, child: Text(m.toString())))
+                          .toList(), // => pickDate(),
+                      onChanged: (newMonth) {
+                        if (newMonth != null) {
+                          _selectedMonth = newMonth;
+                        }
+                        checkCompleteness();
+                      },
+                    ),
                   ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      value: _selectedYear,
+                      decoration: const InputDecoration(hintText: "Año"),
+                      dropdownColor: kWhiteColor,
+                      items: _years
+                          .map((y) => DropdownMenuItem(
+                              value: y, child: Text(y.toString())))
+                          .toList(), // => pickDate(),
+                      onChanged: (newYear) {
+                        if (newYear != null) {
+                          _selectedYear = newYear;
+                        }
+                        checkCompleteness();
+                      },
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
               PrimaryButton(
-                onTap: () {}, //=> createAccount(),
-                text: 'Agregar cuenta',
+                onTap: () => createCategory(), //=> createAccount(),
+                text: 'Crear presupuesto',
                 isActive: _canSubmit,
                 isLoading: _isLoading,
               ),
