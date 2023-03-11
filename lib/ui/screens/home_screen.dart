@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
-import 'package:i_budget_app/models/transaction_model.dart';
 
 import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
@@ -58,9 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _overallProvider = Provider.of<OverallProvider>(context);
-    print(_overallProvider.currentMonth);
-    print(_overallProvider.currentYear);
     print('Rebuilt!');
 
     /***** Providers */
@@ -68,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<AccountsProvider>(context);
     final CategoriesProvider _categoriesProvider =
         Provider.of<CategoriesProvider>(context);
-    final List<Transaction> _monthTransactions =
-        Provider.of<TransactionsProvider>(context).transactionsList;
 
     return Scaffold(
       appBar: AppBar(

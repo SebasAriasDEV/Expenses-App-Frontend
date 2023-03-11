@@ -29,8 +29,8 @@ class PrimaryButton extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: isLoading
-            ? Center(
-                child: const CircularProgressIndicator(color: kPrimaryColor))
+            ? const Center(
+                child: CircularProgressIndicator(color: kPrimaryColor))
             : Text(text, style: headline6.copyWith(color: kWhiteColor)),
       ),
     );
