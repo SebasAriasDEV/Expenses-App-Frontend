@@ -67,10 +67,11 @@ class SummaryItem extends StatelessWidget {
           title,
           style: headline7.copyWith(color: color),
         ),
-        Text(
-          CustomFunctions.formatNumber(amount),
-          style: headline5.copyWith(
-            color: color,
+        FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            CustomFunctions.formatNumber(amount),
+            style: TextStyle(color: color),
           ),
         ),
       ],

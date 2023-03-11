@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/models/account_model.dart';
@@ -8,6 +8,7 @@ import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
+import 'package:i_budget_app/ui/components/custom_snackbar.dart';
 import 'package:i_budget_app/utils/text_themes.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -24,8 +25,12 @@ class ModalCreateTransaction extends StatefulWidget {
 }
 
 class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
+  //** Providers */
   late final TransactionsProvider _transactionsProvider;
+  late final AccountsProvider _accountsProvider;
+  late final CategoriesProvider _categoriesProvider;
 
+  //** Variables  */
   late TCategory _selectedCategory;
   late Account _selectedAccount;
 
@@ -43,15 +48,19 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
   bool _canSubmit = false;
   bool _isLoading = false;
 
+  //** Init State */
   @override
   void initState() {
     super.initState();
 
-    _categories =
-        Provider.of<CategoriesProvider>(context, listen: false).categories;
-    _accounts = Provider.of<AccountsProvider>(context, listen: false).accounts;
+    _categoriesProvider =
+        Provider.of<CategoriesProvider>(context, listen: false);
+    _accountsProvider = Provider.of<AccountsProvider>(context, listen: false);
     _transactionsProvider =
         Provider.of<TransactionsProvider>(context, listen: false);
+
+    _categories = _categoriesProvider.categories;
+    _accounts = _accountsProvider.accounts;
 
     _selectedCategory = _categories[0];
     _selectedAccount = _accounts[0];
@@ -59,6 +68,8 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
     _controllerAccountUid.text = _selectedAccount.uid;
     _controllerCategoryUid.text = _selectedCategory.uid;
   }
+
+  //** Functions */
 
   @override
   void dispose() {
@@ -135,8 +146,15 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
         await _transactionsProvider.getTransactions(
             month: _overallProvider.currentMonth,
             year: _overallProvider.currentYear);
+        await _accountsProvider.getAccounts();
+
         Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(text: 'La transaccion ha sido registrada.'));
       } else {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
+            text: 'Ups! No hemos podido crear la transacción.', isError: true));
         print('Algo salio mal!!!');
       }
 

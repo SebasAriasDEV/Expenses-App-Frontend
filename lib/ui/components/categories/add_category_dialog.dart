@@ -1,9 +1,10 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
+import 'package:i_budget_app/ui/components/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/colors.dart';
@@ -97,7 +98,12 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
           year: _overallProvider.currentYear,
         );
         Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(text: 'El presupuesto ha sido creado!'));
       } else {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
+            text: 'Ups! No pudimos crear el presupuesto.', isError: true));
         print('Algo salio mal');
       }
 
