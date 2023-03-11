@@ -15,9 +15,10 @@ class CustomThemes {
 
     //Appbar
     appBarTheme: const AppBarTheme().copyWith(
-        elevation: 0.0,
-        backgroundColor: kWhiteColor,
-        iconTheme: const IconThemeData().copyWith(color: kPrimaryColor)),
+      elevation: 0.0,
+      backgroundColor: kWhiteColor,
+      iconTheme: const IconThemeData().copyWith(color: kPrimaryColor),
+    ),
 
     //TextFields
     inputDecorationTheme: InputDecorationTheme(
@@ -31,6 +32,10 @@ class CustomThemes {
           style: BorderStyle.none,
         ),
       ),
+    ),
+
+    checkboxTheme: const CheckboxThemeData(
+      fillColor: MaterialStatePropertyAll<Color>(kSuccessColor),
     ),
   );
 }
