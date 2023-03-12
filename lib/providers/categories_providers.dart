@@ -17,7 +17,7 @@ class CategoriesProvider extends ChangeNotifier {
   int get totalCategories => _totalCategories;
 
   //******** Functions */
-  //Get all categories from selected month and year
+  //GET - Get all categories from selected month and year
   Future<void> getCategories(
       {required int month,
       required int year,
@@ -47,7 +47,7 @@ class CategoriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Create a new category
+  //POST - Create a new category
   Future<String> createCategory(String name, double monthlyBudget, int month,
       int year, String currency) async {
     final url = Uri.parse('http://localhost:8000/api/categories');
@@ -66,6 +66,26 @@ class CategoriesProvider extends ChangeNotifier {
         'x-token': testingToken,
       },
       body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return 'OK';
+    } else {
+      print(response.body);
+      return 'ERROR';
+    }
+  }
+
+  //DELETE - Create a new category
+  Future<String> deleteCategory(String uid) async {
+    final url = Uri.parse('http://localhost:8000/api/categories/$uid');
+
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token': testingToken,
+      },
     );
 
     if (response.statusCode == 200) {
