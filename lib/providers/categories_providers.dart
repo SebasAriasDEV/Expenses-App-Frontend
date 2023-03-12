@@ -18,7 +18,10 @@ class CategoriesProvider extends ChangeNotifier {
 
   //******** Functions */
   //Get all categories from selected month and year
-  Future<void> getCategories({required int month, required int year}) async {
+  Future<void> getCategories(
+      {required int month,
+      required int year,
+      required String displayCurrency}) async {
     //Http request to backend
     final url = Uri.parse(
         'http://localhost:8000/api/categories?year=$year&month=$month');
@@ -37,19 +40,23 @@ class CategoriesProvider extends ChangeNotifier {
       //Update provider variables
       _totalCategories = _categoriesListReponse.total;
       _categories = _categoriesListReponse.categories;
+
+      //Change display currency of categories
+      changeCategoriesDisplayCurrency(displayCurrency);
     }
     notifyListeners();
   }
 
   // Create a new category
-  Future<String> createCategory(
-      String name, double monthlyBudget, int month, int year) async {
+  Future<String> createCategory(String name, double monthlyBudget, int month,
+      int year, String currency) async {
     final url = Uri.parse('http://localhost:8000/api/categories');
     final Map<String, Object> body = {
       'name': name,
       'monthlyBudget': monthlyBudget,
       'month': month,
       'year': year,
+      'currency': currency,
     };
 
     final response = await http.post(
@@ -64,8 +71,29 @@ class CategoriesProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       return 'OK';
     } else {
-      print(response.toString());
+      print(response.body);
       return 'ERROR';
     }
+  }
+
+  //Change display currency of categories
+  void changeCategoriesDisplayCurrency(String displayCurrency) {
+    _categories = _categories.map((c) {
+      TCategory category = c;
+      if (c.currency == displayCurrency) {
+        return c;
+      } else {
+        if (displayCurrency == 'COP') {
+          category.monthlyBudget =
+              double.parse((c.monthlyBudget * 5050).toStringAsFixed(2));
+        } else {
+          category.monthlyBudget =
+              double.parse((c.monthlyBudget / 5050).toStringAsFixed(2));
+        }
+        return category;
+      }
+    }).toList();
+
+    notifyListeners();
   }
 }

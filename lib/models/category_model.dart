@@ -4,17 +4,20 @@ class TCategory {
   String name;
   double monthlyBudget;
   String uid;
+  String currency;
 
   TCategory({
     required this.name,
     required this.monthlyBudget,
     required this.uid,
+    required this.currency,
   });
 
   factory TCategory.fromJson(Map<String, dynamic> json) => TCategory(
         name: json['name'],
         monthlyBudget: json['monthlyBudget'].toDouble(),
         uid: json['uid'] ?? json['_id'],
+        currency: json['currency'],
       );
 
   Map<String, dynamic> toJson() {

@@ -57,6 +57,8 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
           Provider.of<AccountsProvider>(context, listen: false);
       final TransactionsProvider _transactionsProvider =
           Provider.of<TransactionsProvider>(context, listen: false);
+      final CategoriesProvider _categoriesProvider =
+          Provider.of<CategoriesProvider>(context, listen: false);
 
       //Change currency
       _overallProvider.overallCurrency = currency;
@@ -67,6 +69,8 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
         year: _overallProvider.currentYear,
         displayCurrency: _overallProvider.overallCurrency,
       );
+      _categoriesProvider
+          .changeCategoriesDisplayCurrency(_overallProvider.overallCurrency);
 
       Navigator.pop(context);
 

@@ -26,11 +26,10 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
   //** Variables */
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerBudget = TextEditingController();
-  final TextEditingController _controllerMonth = TextEditingController();
-  final TextEditingController _controllerYear = TextEditingController();
 
   late int _selectedMonth;
   late int _selectedYear;
+  late String _selectedCurrency;
 
   bool _canSubmit = false;
   bool _isLoading = false;
@@ -44,6 +43,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
 
     _selectedMonth = _overallProvider.currentMonth;
     _selectedYear = _overallProvider.currentYear;
+    _selectedCurrency = _overallProvider.overallCurrency;
   }
 
   @override
@@ -51,21 +51,6 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
     super.dispose();
     _controllerName.dispose();
     _controllerBudget.dispose();
-    _controllerMonth.dispose();
-    _controllerYear.dispose();
-  }
-
-  //** Functions */
-  void checkCompleteness() {
-    if (_controllerName.text != '' &&
-        _controllerBudget.text != '' &&
-        _selectedMonth != 0 &&
-        _selectedYear != 0) {
-      _canSubmit = true;
-    } else {
-      _canSubmit = false;
-    }
-    setState(() {});
   }
 
   //** Build widgets */
@@ -78,8 +63,24 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
     //** Build -  Variables */
     final List<int> _months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     final List<int> _years = [2023, 2024, 2025];
+    final List<String> _currencies = ['COP', 'EUR'];
 
     //** Build - Functions */
+    //Check completeness
+    void checkCompleteness() {
+      if (_controllerName.text != '' &&
+          _controllerBudget.text != '' &&
+          _selectedMonth != 0 &&
+          _selectedYear != 0 &&
+          _selectedCurrency != '') {
+        _canSubmit = true;
+      } else {
+        _canSubmit = false;
+      }
+      setState(() {});
+    }
+
+    //Create a new category
     Future<void> createCategory() async {
       //Set loading to true
       _isLoading = true;
@@ -90,13 +91,14 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
         double.parse(_controllerBudget.text),
         _selectedMonth,
         _selectedYear,
+        _selectedCurrency,
       );
 
       if (response == 'OK') {
         await _categoriesProvider.getCategories(
-          month: _overallProvider.currentMonth,
-          year: _overallProvider.currentYear,
-        );
+            month: _overallProvider.currentMonth,
+            year: _overallProvider.currentYear,
+            displayCurrency: _overallProvider.overallCurrency);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
             customSnackBar(text: 'El presupuesto ha sido creado!'));
@@ -131,18 +133,39 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                 onChanged: (_) => checkCompleteness(),
               ),
               const SizedBox(height: 15),
-              TextField(
-                controller: _controllerBudget,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration().copyWith(
-                  hintText: 'Presupuesto mensual',
-                  prefix: const Text(
-                    'COP:  ',
-                    style: paragraph7,
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(hintText: "Moneda"),
+                      dropdownColor: kWhiteColor,
+                      value: _selectedCurrency,
+                      items: _currencies
+                          .map((m) => DropdownMenuItem(
+                              value: m, child: Text(m.toString())))
+                          .toList(), // => pickDate(),
+                      onChanged: (newCurrency) {
+                        if (newCurrency != null) {
+                          _selectedCurrency = newCurrency;
+                        }
+                        checkCompleteness();
+                      },
+                    ),
                   ),
-                ),
-                onChanged: (_) => checkCompleteness(),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: _controllerBudget,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration().copyWith(
+                        hintText: 'Presupuesto mensual',
+                      ),
+                      onChanged: (_) => checkCompleteness(),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 15),
               Row(

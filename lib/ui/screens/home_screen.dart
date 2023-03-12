@@ -56,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<CategoriesProvider>(context, listen: false);
     _categoriesProvider.getCategories(
         year: _overallProvider.currentYear,
-        month: _overallProvider.currentMonth);
+        month: _overallProvider.currentMonth,
+        displayCurrency: _overallProvider.overallCurrency);
   }
 
   @override
