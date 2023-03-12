@@ -28,9 +28,9 @@ class MonthIndicator extends StatelessWidget {
     // *****  Functions *****
     Future<void> refreshMonth() async {
       await _transactionsProvider.getTransactions(
-        month: _overallProvider.currentMonth,
-        year: _overallProvider.currentYear,
-      );
+          month: _overallProvider.currentMonth,
+          year: _overallProvider.currentYear,
+          displayCurrency: _overallProvider.overallCurrency);
       await _categoriesProvider.getCategories(
         month: _overallProvider.currentMonth,
         year: _overallProvider.currentYear,

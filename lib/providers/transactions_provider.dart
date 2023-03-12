@@ -17,7 +17,10 @@ class TransactionsProvider extends ChangeNotifier {
 
   //**** Functions */
   //HTTP request for transactions
-  Future<void> getTransactions({required int month, required int year}) async {
+  Future<void> getTransactions(
+      {required int month,
+      required int year,
+      required String displayCurrency}) async {
     final url = Uri.parse(
         'http://localhost:8000/api/transactions?month=$month&year=$year');
 
@@ -35,6 +38,29 @@ class TransactionsProvider extends ChangeNotifier {
       //Update provider variables
       _totalTransactions = transactionsListResponse.total;
       _transactionsList = transactionsListResponse.transactions;
+
+      //Change display currency on each transaction
+      print('********* ${_transactionsList.length}');
+      for (var t in _transactionsList) {
+        print(t.amount);
+      }
+      _transactionsList = _transactionsList.map((t) {
+        Transaction tran = t;
+        if (t.account.currency == displayCurrency) {
+          return tran;
+        } else {
+          if (displayCurrency == 'COP') {
+            tran.amount = double.parse((t.amount * 5050).toStringAsFixed(2));
+          } else {
+            tran.amount = double.parse((t.amount / 5050).toStringAsFixed(2));
+          }
+          return tran;
+        }
+      }).toList();
+    }
+    print('********* ${_transactionsList.length}');
+    for (var t in _transactionsList) {
+      print(t.amount);
     }
 
     notifyListeners();
@@ -98,9 +124,7 @@ class TransactionsProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       return 'OK';
     } else {
-      print(response.statusCode);
       print(response.body);
-      print(response.toString());
       return 'ERROR';
     }
   }

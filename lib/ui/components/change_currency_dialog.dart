@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
+import 'package:i_budget_app/providers/categories_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
+import 'package:i_budget_app/providers/transactions_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -53,11 +55,18 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
 
       final AccountsProvider _accountsProvider =
           Provider.of<AccountsProvider>(context, listen: false);
+      final TransactionsProvider _transactionsProvider =
+          Provider.of<TransactionsProvider>(context, listen: false);
 
       //Change currency
       _overallProvider.overallCurrency = currency;
       //Get account balances based on new currency
-      _accountsProvider.getAccounts(_overallProvider.overallCurrency);
+      await _accountsProvider.getAccounts(_overallProvider.overallCurrency);
+      await _transactionsProvider.getTransactions(
+        month: _overallProvider.currentMonth,
+        year: _overallProvider.currentYear,
+        displayCurrency: _overallProvider.overallCurrency,
+      );
 
       Navigator.pop(context);
 
@@ -89,7 +98,6 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
               onChanged: (_) {
                 _selection = [true, false];
                 _canSubmit = true;
-                _overallProvider.overallCurrency = currencies[0];
                 setState(() {});
               },
             ),
@@ -100,7 +108,6 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
               onChanged: (_) {
                 _selection = [false, true];
                 _canSubmit = true;
-                _overallProvider.overallCurrency = currencies[1];
                 setState(() {});
               },
             ),

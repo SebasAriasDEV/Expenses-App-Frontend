@@ -145,7 +145,8 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
       if (response == 'OK') {
         await _transactionsProvider.getTransactions(
             month: _overallProvider.currentMonth,
-            year: _overallProvider.currentYear);
+            year: _overallProvider.currentYear,
+            displayCurrency: _overallProvider.overallCurrency);
         await _accountsProvider.getAccounts(_overallProvider.overallCurrency);
 
         Navigator.pop(context);

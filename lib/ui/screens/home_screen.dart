@@ -48,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<TransactionsProvider>(context, listen: false);
     _transactionsProvider.getTransactions(
         year: _overallProvider.currentYear,
-        month: _overallProvider.currentMonth);
+        month: _overallProvider.currentMonth,
+        displayCurrency: _overallProvider.overallCurrency);
 
     //Get ininital load of categories
     _categoriesProvider =
