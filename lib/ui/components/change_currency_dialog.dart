@@ -1,5 +1,9 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
+import 'package:i_budget_app/providers/accounts_providers.dart';
 import 'package:i_budget_app/providers/overall_provider.dart';
+import 'package:i_budget_app/ui/components/custom_buttons.dart';
 import 'package:i_budget_app/utils/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +24,8 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
 
   //** Variables */
   late List<bool> _selection;
+  bool _canSubmit = false;
+  bool _isLoading = false;
 
   //** Init State */
   @override
@@ -35,9 +41,32 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
 
   @override
   Widget build(BuildContext context) {
+    //** Build - Variables */
     final List<String> currencies = ['COP', 'EUR'];
     final List<String> subtitles = ['\$ - Peso Colombiano', '€ - Euro'];
 
+    //** Build - Functions */
+    Future<void> changeCurrency(String currency) async {
+      //Start loading
+      _isLoading = true;
+      setState(() {});
+
+      final AccountsProvider _accountsProvider =
+          Provider.of<AccountsProvider>(context, listen: false);
+
+      //Change currency
+      _overallProvider.overallCurrency = currency;
+      //Get account balances based on new currency
+      _accountsProvider.getAccounts(_overallProvider.overallCurrency);
+
+      Navigator.pop(context);
+
+      //Stops loading
+      _isLoading = false;
+      setState(() {});
+    }
+
+    //** Build - Widgets */
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor: kGreyColorShade4,
@@ -59,6 +88,7 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
               value: _selection[0],
               onChanged: (_) {
                 _selection = [true, false];
+                _canSubmit = true;
                 _overallProvider.overallCurrency = currencies[0];
                 setState(() {});
               },
@@ -69,16 +99,24 @@ class _ChangeCurrencyDialogState extends State<ChangeCurrencyDialog> {
               value: _selection[1],
               onChanged: (_) {
                 _selection = [false, true];
+                _canSubmit = true;
                 _overallProvider.overallCurrency = currencies[1];
                 setState(() {});
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(
               'Tasa de cambio COP/EUR: 5.050',
               style: paragraph3.copyWith(color: kGreyColor),
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 10),
+            PrimaryButton(
+              onTap: () => changeCurrency(_selection[0] ? 'COP' : 'EUR'),
+              text: 'Cambiar moneda',
+              isActive: _canSubmit,
+              isLoading: _isLoading,
+            )
           ],
         ),
       ),

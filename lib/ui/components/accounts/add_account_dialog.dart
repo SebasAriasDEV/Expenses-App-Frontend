@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:i_budget_app/providers/accounts_providers.dart';
+import 'package:i_budget_app/providers/overall_provider.dart';
 import 'package:i_budget_app/ui/components/custom_buttons.dart';
 import 'package:i_budget_app/ui/components/custom_snackbar.dart';
 import 'package:i_budget_app/utils/colors.dart';
@@ -18,6 +19,9 @@ class DialogCreateAccount extends StatefulWidget {
 }
 
 class _DialogCreateAccountState extends State<DialogCreateAccount> {
+  //** Providers */
+
+  //** Variables */
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerType = TextEditingController();
   final TextEditingController _controllerCurrency = TextEditingController();
@@ -45,7 +49,11 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-    //** Functions */
+    //** Build - Providers */
+    final OverallProvider _overallProvider =
+        Provider.of<OverallProvider>(context, listen: false);
+
+    //** Build - Functions */
     // Checks if every field is filled so it can create the transaction
     void checkCompleteness() {
       if (_controllerName.text != '' &&
@@ -73,7 +81,7 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
       );
 
       if (response == 'OK') {
-        await _accountsProvider.getAccounts();
+        await _accountsProvider.getAccounts(_overallProvider.overallCurrency);
         Navigator.pop(context);
         ScaffoldMessenger.of(context)
             .showSnackBar(customSnackBar(text: 'La cuenta ha sido creada!'));
@@ -91,7 +99,7 @@ class _DialogCreateAccountState extends State<DialogCreateAccount> {
       setState(() {});
     }
 
-    //** Build Widgets */
+    //** Build -  Widgets */
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor: kGreyColorShade4,

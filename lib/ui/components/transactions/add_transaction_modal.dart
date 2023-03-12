@@ -146,7 +146,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
         await _transactionsProvider.getTransactions(
             month: _overallProvider.currentMonth,
             year: _overallProvider.currentYear);
-        await _accountsProvider.getAccounts();
+        await _accountsProvider.getAccounts(_overallProvider.overallCurrency);
 
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(

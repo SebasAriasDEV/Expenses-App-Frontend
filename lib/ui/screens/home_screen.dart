@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Get initial load of accounts
     _accountsProvider = Provider.of<AccountsProvider>(context, listen: false);
-    _accountsProvider.getAccounts();
+    _accountsProvider.getAccounts(_overallProvider.overallCurrency);
 
     //Get initial load of transactions
     _transactionsProvider =

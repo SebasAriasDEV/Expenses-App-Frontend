@@ -18,9 +18,10 @@ class AccountsProvider extends ChangeNotifier {
   int get totalAccounts => _totalAccounts;
 
   //******** Functions */
-  Future<void> getAccounts() async {
+  Future<void> getAccounts(String displayCurrency) async {
     //Http request to backend
-    final url = Uri.parse('http://localhost:8000/api/accounts');
+    final url = Uri.parse(
+        'http://localhost:8000/api/accounts?displayCurrency=$displayCurrency');
     //TODO: Cuando el server esta caido, deberia mostrar error
     var response = await http.get(url, headers: {
       'x-token': testingToken,
@@ -33,6 +34,8 @@ class AccountsProvider extends ChangeNotifier {
       //Update provider variables
       _totalAccounts = _accountsListReponse.total;
       _accounts = _accountsListReponse.accounts;
+    } else {
+      print(response.body);
     }
 
     notifyListeners();
