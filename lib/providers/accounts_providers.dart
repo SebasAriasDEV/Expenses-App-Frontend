@@ -21,7 +21,7 @@ class AccountsProvider extends ChangeNotifier {
   Future<void> getAccounts(String displayCurrency) async {
     //Http request to backend
     final url = Uri.parse(
-        'http://localhost:8000/api/accounts?displayCurrency=$displayCurrency');
+        'http://192.168.0.31:8000/api/accounts?displayCurrency=$displayCurrency');
     //TODO: Cuando el server esta caido, deberia mostrar error
     var response = await http.get(url, headers: {
       'x-token': testingToken,
@@ -49,7 +49,7 @@ class AccountsProvider extends ChangeNotifier {
     String currency,
     double balance,
   ) async {
-    final Uri url = Uri.parse('http://localhost:8000/api/accounts');
+    final Uri url = Uri.parse('http://192.168.0.31:8000/api/accounts');
     final body = {
       'name': name,
       'type': type,

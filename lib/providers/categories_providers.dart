@@ -24,7 +24,7 @@ class CategoriesProvider extends ChangeNotifier {
       required String displayCurrency}) async {
     //Http request to backend
     final url = Uri.parse(
-        'http://localhost:8000/api/categories?year=$year&month=$month');
+        'http://192.168.0.31:8000/api/categories?year=$year&month=$month');
     //TODO: Cuando el server esta caido, deberia mostrar error
     final response = await http.get(
       url,
@@ -50,7 +50,7 @@ class CategoriesProvider extends ChangeNotifier {
   //POST - Create a new category
   Future<String> createCategory(String name, double monthlyBudget, int month,
       int year, String currency) async {
-    final url = Uri.parse('http://localhost:8000/api/categories');
+    final url = Uri.parse('http://192.168.0.31:8000/api/categories');
     final Map<String, Object> body = {
       'name': name,
       'monthlyBudget': monthlyBudget,
@@ -78,7 +78,7 @@ class CategoriesProvider extends ChangeNotifier {
 
   //DELETE - Create a new category
   Future<String> deleteCategory(String uid) async {
-    final url = Uri.parse('http://localhost:8000/api/categories/$uid');
+    final url = Uri.parse('http://192.168.0.31:8000/api/categories/$uid');
 
     final response = await http.delete(
       url,

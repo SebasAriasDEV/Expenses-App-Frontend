@@ -22,7 +22,7 @@ class TransactionsProvider extends ChangeNotifier {
       required int year,
       required String displayCurrency}) async {
     final url = Uri.parse(
-        'http://localhost:8000/api/transactions?month=$month&year=$year');
+        'http://192.168.0.31:8000/api/transactions?month=$month&year=$year');
 
     final response = await http.get(
       url,
@@ -103,7 +103,7 @@ class TransactionsProvider extends ChangeNotifier {
       String transactionType,
       String description,
       String date) async {
-    final Uri url = Uri.parse('http://localhost:8000/api/transactions');
+    final Uri url = Uri.parse('http://192.168.0.31:8000/api/transactions');
     final body = {
       'transactionType': transactionType,
       'amount': amount,
