@@ -136,13 +136,20 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
               Row(
                 children: [
                   Expanded(
+                    flex: 2,
                     child: DropdownButtonFormField<String>(
                       decoration: const InputDecoration(hintText: "Moneda"),
                       dropdownColor: kWhiteColor,
                       value: _selectedCurrency,
                       items: _currencies
-                          .map((m) => DropdownMenuItem(
-                              value: m, child: Text(m.toString())))
+                          .map(
+                            (m) => DropdownMenuItem(
+                              value: m,
+                              child: Text(
+                                m.toString(),
+                              ),
+                            ),
+                          )
                           .toList(), // => pickDate(),
                       onChanged: (newCurrency) {
                         if (newCurrency != null) {
@@ -154,7 +161,7 @@ class _NewCategoryDialogState extends State<NewCategoryDialog> {
                   ),
                   const SizedBox(width: 15),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: TextField(
                       controller: _controllerBudget,
                       keyboardType:
