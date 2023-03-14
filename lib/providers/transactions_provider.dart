@@ -128,4 +128,24 @@ class TransactionsProvider extends ChangeNotifier {
       return 'ERROR';
     }
   }
+
+  //DELETE - Deletes an account
+  Future<String> deleteTransaction(String uid) async {
+    final url = Uri.parse('http://192.168.0.31:8000/api/transactions/$uid');
+
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token': testingToken,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return 'OK';
+    } else {
+      print(response.body);
+      return 'ERROR';
+    }
+  }
 }

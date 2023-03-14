@@ -76,7 +76,7 @@ class CategoriesProvider extends ChangeNotifier {
     }
   }
 
-  //DELETE - Create a new category
+  //DELETE - Deletes a category
   Future<String> deleteCategory(String uid) async {
     final url = Uri.parse('http://192.168.0.31:8000/api/categories/$uid');
 

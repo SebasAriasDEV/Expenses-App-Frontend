@@ -62,6 +62,7 @@ class _ModalCreateTransactionState extends State<ModalCreateTransaction> {
     _categories = _categoriesProvider.categories;
     _accounts = _accountsProvider.accounts;
 
+    //TODO: Si no hay al menos 1 cuenta y una categoria, no puede crear transaccion
     _selectedCategory = _categories[0];
     _selectedAccount = _accounts[0];
 
