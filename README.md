@@ -20,10 +20,4 @@ Back-end of the project can be found here [iBudget Backend](https://github.com/S
 - Http (API connection)
 
 ## Example images
-![Screenshot 1](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Screenshot1.png?raw=true)
-
-![Screenshot 2](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Screenshot2.png?raw=true)
-
-![Screenshot 3](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Screenshot3.png?raw=true)
-
-![Screenshot 4](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Screenshot4.png?raw=true)
+![Cover](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Cover.jpg)
