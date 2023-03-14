@@ -1,16 +1,20 @@
-# i_budget_app
+# Flutter iBudget App
 
-A new Flutter project.
+This is the front-end part of my personal full-stack project named iBudget app. This app is developed in **Flutter**, using **Provider** as state management.
 
-## Getting Started
+This app is intended for people who need to manage their personal finances on a weekly/monthly basis. Users can:
 
-This project is a starting point for a Flutter application.
+- Create and manage their monthly budgets
+- Add and manage transactions (income and expenses)
+- See a summary of their net movements
+- Create multiple accounts (debit and credit)
+- See the report in multiple currencies
 
-A few resources to get you started if this is your first Flutter project:
+Back-end of the project can be found here [iBudget Backend](https://github.com/SebasAriasDEV/Expenses-App-Backend).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Techologies used in Front-End
+
+- Flutter
+- Provider (State Management)
+- Http (API connection)
