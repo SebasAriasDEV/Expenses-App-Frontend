@@ -13,11 +13,11 @@ This app is intended for people who need to manage their personal finances on a 
 Back-end of the project can be found here [iBudget Backend](https://github.com/SebasAriasDEV/Expenses-App-Backend).
 
 
-## Techologies used in Front-End
+## Technologies used in Front-End
 
 - Flutter
 - Provider (State Management)
 - Http (API connection)
 
-## Example images
+## Example Images
 ![Cover](https://github.com/SebasAriasDEV/Expenses-App-Frontend/blob/main/assets/Cover.jpg)
